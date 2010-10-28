@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+<link type="text/css" rel="stylesheet" href="skin/jplayer.css">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.jplayer.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+	// Local copy of jQuery selectors, for performance.
+	var jpPlayTime = $("#jplayer_play_time");
+	var jpTotalTime = $("#jplayer_total_time");
+	var jpStatus = $("#demo_status"); // For displaying information about jPlayer's status in the demo page
+
+	$("#jquery_jplayer").jPlayer({
+		ready: function () {
+			this.element.jPlayer("setFile", "270810_SIRB_finaledit1_maxgain.mp3").jPlayer("play");
+			demoInstanceInfo(this.element, $("#demo_info")); // This displays information about jPlayer's configuration in the demo page
+		},
+		volume: 50,
+		oggSupport: false,
+		preload: 'none'
+	})
+	.jPlayer("onProgressChange", function(loadPercent, playedPercentRelative, playedPercentAbsolute, playedTime, totalTime) {
+		jpPlayTime.text($.jPlayer.convertTime(playedTime));
+		jpTotalTime.text($.jPlayer.convertTime(totalTime));
+
+		demoStatusInfo(this.element, jpStatus); // This displays information about jPlayer's status in the demo page
+	})
+	.jPlayer("onSoundComplete", function() {
+		this.element.jPlayer("play");
+	});
+});
+</script>
+
+</head>
+
+<body>
+<p>Renowned business and technology journalist, Stephen Pritchard, interviewing Matt Fisher, Chairman of the SIRB on what is an effective Software Asset Management programme and how implementing one can help organisations to manage their software estate to match their needs today.</p>
+<div id="jquery_jplayer" style="display:block;width:600px;height:400px;"></div>
+<div id="demo_info"></div>
+
+</body>
+</html>
